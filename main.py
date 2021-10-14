@@ -33,12 +33,12 @@ while is_running:
     screen.blit(sky_surface, (0, 0))
     screen.blit(ground_surface, (0, 300))
     screen.blit(text_surface, (300, 50))
-    screen.blit(player_surface, (150, 200))
+
     snail_x_pos -= 4
     if snail_x_pos < -200:
         snail_x_pos = 800
     screen.blit(snail_guy, (snail_x_pos, snail_y_pos))
-
+    screen.blit(player_surface, (80, 200))
 
 
     # update everything
