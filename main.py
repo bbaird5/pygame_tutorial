@@ -9,13 +9,16 @@ test_font = pygame.font.Font("font/Pixeltype.ttf", 50)
 
 sky_surface = pygame.image.load("graphics/Sky.png").convert()
 ground_surface = pygame.image.load('graphics/ground.png').convert()
+
 text_surface = test_font.render("My Goober Run", False, "Black")
+text_rect = text_surface.get_rect(center = (400, 50))
 
 snail_guy = pygame.image.load("graphics/snail/snail1.png").convert_alpha()
-snail_x_pos = 600
-snail_y_pos = 250
+snail_rect = snail_guy.get_rect(midbottom = (600, 300))
+
 
 player_surface = pygame.image.load('graphics/Player/player_walk_1.png').convert_alpha()
+player_rect = player_surface.get_rect(midbottom = (80, 300))
 
 is_running = True
 while is_running:
@@ -23,23 +26,32 @@ while is_running:
         if event.type == pygame.QUIT:
             pygame.quit()
             exit()
-        elif event.type == pygame.K_SPACE:
-            snail_y_pos = 300
+        # if event.type == pygame.MOUSEMOTION:
+        #     if player_rect.collidepoint(event.pos):
+        #         print("collision")
 
 
 
-    # draw all our elements
 
     screen.blit(sky_surface, (0, 0))
     screen.blit(ground_surface, (0, 300))
-    screen.blit(text_surface, (300, 50))
+    pygame.draw.rect(screen, "Pink", text_rect, 10)
+    pygame.draw.rect(screen, "Pink", text_rect)
+    pygame.draw.line(screen, "Black", (800, 0), pygame.mouse.get_pos(), 10)
+    screen.blit(text_surface, text_rect)
 
-    snail_x_pos -= 4
-    if snail_x_pos < -200:
-        snail_x_pos = 800
-    screen.blit(snail_guy, (snail_x_pos, snail_y_pos))
-    screen.blit(player_surface, (80, 200))
+    screen.blit(snail_guy, snail_rect)
+    screen.blit(player_surface, player_rect)
 
+    snail_rect.x -= 4
+    if snail_rect.right <= 0:
+        snail_rect.left = 800
+
+    # if player_rect.colliderect(snail_rect):
+    #     print("collision")
+    mouse_pos = pygame.mouse.get_pos()
+    # if player_rect.collidepoint((mouse_pos)):
+    #     print(pygame.mouse.get_pressed())
 
     # update everything
     pygame.display.update()
